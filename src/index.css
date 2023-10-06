@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  box-sizing: border-box;
+}
+
+/* :root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%; 
+} */
+
+body {
+  background: #121214;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+.dashed-line-left {
+  position: absolute;
+  border-top: 1px solid #4b5563;
+  width: 45%;
+  height: 1px;
+  left: 0;
+}
+
+
+.dashed-line-right {
+  position: absolute;
+  border-top: 1px solid #4b5563;
+  width: 45%;
+  height: 1px;
+  right: 0;
+}
+
+@media (max-with: 1080px) {
+  html {
+    font-size: 93.75%;
+  }
+}
+@media (max-with: 720px) {
+  html {
+    font-size: 87.5%;
+  }
+}
+
+body,
+input,
+button,
+textarea {
+  font: 400 1rem 'Roboto', sans-serif;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
