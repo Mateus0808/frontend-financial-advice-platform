@@ -9,7 +9,24 @@
   box-sizing: border-box;
 }
 
-/* :root {
+:root {
+  --primary-color: #8257e5;
+  --secondary-color: #825afd;
+  --primary-hover: #9466ff;
+  --primary-border: #6833e4;
+  --primary-text: #a8a8b3;
+  --primary-gradient-top: linear-gradient(180deg,#1d1929,rgba(18,18,20,0));
+  --black: #000;
+  --black-900: #121214;
+  --transparent-200: rgba(0, 0, 0, 0.2);
+  --white: #fff;
+  --white-100: #f5f4f3;
+  --gray-100: #e1e1e6;
+  --gray-300: #c4c4c4;
+  --gray-400: #d5dbdb;
+  --gray-200: #b9c7bd;
+  --gray-800: #24292e;
+
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -22,8 +39,8 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%; 
-} */
+  -webkit-text-size-adjust: 100%;
+}
 
 body {
   background: #121214;
@@ -39,13 +56,29 @@ body {
   left: 0;
 }
 
-
 .dashed-line-right {
   position: absolute;
   border-top: 1px solid #4b5563;
   width: 45%;
   height: 1px;
   right: 0;
+}
+
+@media screen and (min-width:768px) {
+  .activePage {
+    color: #fff;
+  }
+  
+  .activePage::after {
+    content: '';
+    height: 3px;
+    width: 100%;
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    border-radius: 3px 3px 0 0;
+    background: var(--primary-color);
+  }
 }
 
 @media (max-with: 1080px) {
