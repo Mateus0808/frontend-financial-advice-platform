@@ -1,4 +1,5 @@
-import { AxiosError } from 'axios'
+import axios, { AxiosError } from 'axios'
+
 import { apiSetup } from '../api-setup.service'
 
 interface ErrorResponse {
@@ -7,6 +8,7 @@ interface ErrorResponse {
 
 export const createUserService = async (data: any) => {
   try {
+    console.log('apiSetup', apiSetup.defaults)
     const user = await apiSetup.post('/auth/register', data)
     console.log('user', user)
     return {

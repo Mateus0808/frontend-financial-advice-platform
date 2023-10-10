@@ -7,6 +7,7 @@ interface ErrorResponse {
 
 export const userLoginService = async (data: any) => {
   try {
+    console.log('apiSetup', apiSetup)
     const user = await apiSetup.post('/auth/login', data)
     return {
       data: user.data,
