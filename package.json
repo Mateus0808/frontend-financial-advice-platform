@@ -9,7 +9,6 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
-  "proxy": "http://localhost:8080",
   "dependencies": {
     "@unform/web": "^2.1.6",
     "axios": "^1.5.1",

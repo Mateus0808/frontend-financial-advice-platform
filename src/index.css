@@ -27,6 +27,8 @@
   --gray-200: #b9c7bd;
   --gray-800: #24292e;
 
+  --bg-linear-gradient: linear-gradient(180deg,#1d1929,rgba(18,18,20,0));
+
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -43,7 +45,8 @@
 }
 
 body {
-  background: #121214;
+  background: (--bg-linear-gradient);
+  color: #121214;
   min-width: 320px;
   min-height: 100vh;
 }

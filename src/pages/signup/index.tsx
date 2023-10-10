@@ -17,8 +17,8 @@ export const SignUp = () => {
 
   async function handleSubmit(data: CreateUserParams) {
     const createdUser = await createUserService(data)
+    console.log('createdUser', createdUser)
     if (createdUser.error) {
-      console.log('createdUser', createdUser)
       errorNotify('Erro ao criar usuário')
       return
     }
@@ -29,7 +29,7 @@ export const SignUp = () => {
   }
 
   return (
-    <div className="max-w-[1120px] bg-primary-gradient-top m-auto py-0 px-8 flex justify-center items-center h-screen">
+    <div className="max-w-[1120px] mt-12 bg-primary-gradient-top m-auto py-0 px-8 flex justify-center items-center h-screen">
       <div className="min-h-[524px] flex bg-[#2563eb] bg-opacity-50">
         <div className="w-80 rounded-lg shadow-md flex flex-col justify-around items-center">
           <img
@@ -44,7 +44,7 @@ export const SignUp = () => {
             onSubmit={handleSubmit}
             className="flex w-full flex-col"
           >
-            <h1 className="text-2xl font-semibold mb-6 text-center">
+            <h1 className="text-2xl text-gray-600 font-semibold mb-6 text-center">
               REGISTRAR USUÁRIO
             </h1>
             <div className="flex flex-col">
@@ -143,12 +143,20 @@ export const SignUp = () => {
               ) : (
                 <Button title="CADASTRAR" type="submit" />
               )}
-              <div className='flex justify-center items-center w-full relative'>
-                <span className='dashed-line-left'></span>
-                <span className='text-[#4b5563]'>ou</span>
-                <span className='dashed-line-right'></span>
+              <div className="flex justify-center items-center w-full relative">
+                <span className="dashed-line-left"></span>
+                <span className="text-sm font-bold text-[#4b5563]">OU</span>
+                <span className="dashed-line-right"></span>
               </div>
-              <a className='h-12 bg-transparent w-full flex items-center justify-center border-2 rounded' href="">Fazer login</a>
+              <span className="flex whitespace-nowrap gap-1 items-center justify-center">
+                Já possui uma conta?
+                <a
+                  className="h-12 w-full text-primary font-bold flex items-center justify-center transition ease-in-out hover:underline"
+                  href="/login"
+                >
+                  Faça login
+                </a>
+              </span>
             </div>
           </Form>
         </div>

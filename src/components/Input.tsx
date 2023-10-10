@@ -31,7 +31,7 @@ export const Input = ({ name, ...rest }: InputProps) => {
       id={name}
       name={name}
       {...rest}
-      className="w-full bg-gray-200 p-2 h-12 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-border"
+      className="w-full bg-gray-200 text-gray-600 p-2 h-12 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-border"
     />
   )
 }
