@@ -7,13 +7,14 @@ interface ErrorResponse {
 
 export const userLoginService = async (data: any) => {
   try {
-    console.log('apiSetup', apiSetup)
     const user = await apiSetup.post('/auth/login', data)
+
     return {
       data: user.data,
       error: false,
     }
   } catch (error: any) {
+    console.log('userLoginService', error)
     const axiosError = error as AxiosError<ErrorResponse>
     let errorMessage: string
 

@@ -6,7 +6,7 @@ interface LabelProps extends LabelHTMLAttributes<HTMLLabelElement> {
 
 export const Label = ({ label, ...rest }: LabelProps) => {
   return (
-    <label {...rest} className="flex mb-2 text-sm font-bold text-gray-600">
+    <label {...rest} className="flex whitespace-nowrap mb-2 text-md font-bold text-gray-600">
       {label}
     </label>
   )

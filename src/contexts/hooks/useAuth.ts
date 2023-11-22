@@ -4,11 +4,11 @@ import { UserResponse } from '../../services/user/type/user-response.interface'
 import { useNavigate } from 'react-router-dom'
 import { userLoginService } from '../../services/user/auth-user.service'
 import { getUserById } from '../../services/user/get-user-by-id.service'
-import { errorNotify } from '../../utils/notify'
+import { errorNotify, successNotify } from '../../utils/notify'
 // import { errorNotify } from '../../utils/notify';
 
 type SignInData = {
-  email: string
+  login: string
   password: string
 }
 
@@ -18,37 +18,35 @@ export function useAuth() {
   const [loading, setLoading] = useState(true)
   const isAuthenticated = !!user
 
-  useEffect(() => {
-    setLoading(true)
-    ;(async function fetchData() {
-      const token = localStorage.getItem('access_token')
-      const userId = localStorage.getItem('snw_userId')
-      if (token && userId) {
-        const myUser = await getUserById(userId)
-        setUser(myUser.data)
-        return
-      }
-      navigate('/')
-    })()
-    setLoading(false)
-  }, [])
+  // useEffect(() => {
+  //   setLoading(true)
+  //   ;(async function fetchData() {
+  //     const token = localStorage.getItem('access_token')
 
-  async function signIn({ email, password }: SignInData) {
+  //     if (token) {
+  //       return
+  //     }
+  //     navigate('/login')
+  //   })()
+  //   setLoading(false)
+  // }, [])
+
+  async function signIn({ login, password }: SignInData) {
     setLoading(true)
     try {
-      const response = await userLoginService({ email, password })
+      const response = await userLoginService({ login, password })
+      console.log('response', response)
       if (response.error) {
-        errorNotify(response.data)
+        errorNotify('Erro ao fazer login')
         return
       }
-      const { user: newUser, token } = response.data
-      setUser(newUser)
+      const { token } = response.data
 
-      localStorage.setItem('paf_token', token)
-      localStorage.setItem('snw_userId', newUser.id)
+      localStorage.setItem('access_token', token)
 
       apiSetup.defaults.headers.common.authorization = `Bearer ${token}`
-      navigate('/home')
+      successNotify('Usuário logado com sucesso')
+      navigate('/dashboard')
     } catch (error) {
       console.log('error', error)
     } finally {
@@ -58,8 +56,8 @@ export function useAuth() {
 
   async function signOut() {
     localStorage.removeItem('access_token')
-    localStorage.removeItem('snw_userId')
-    navigate('/')
+    // localStorage.removeItem('snw_userId')
+    navigate('/login')
   }
 
   return { signIn, signOut, isAuthenticated, user, loading, setUser }

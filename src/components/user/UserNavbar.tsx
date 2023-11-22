@@ -25,7 +25,7 @@ const Link = (props: LinkProps) => {
   )
 }
 
-export const Navbar = () => {
+export const UserNavbar = () => {
   const location = useLocation()
   const [menuIsActivated, setMenuIsActivated] = useState(false)
   const isDesktop = useMediaQuery({ minWidth: 768 })
@@ -59,28 +59,22 @@ export const Navbar = () => {
         } h-screen bg-[#202024] w-full absolute top-16 left-0 md:flex md:items-center md:justify-center md:static md:w-1/2 md:h-16`}
       >
         <ul className="flex flex-col w-full h-full p-8 gap-2 md:gap-0 md:flex-row md:p-0 md:items-center md:justify-center">
-          <Link name="Home" link="/" pathname={location.pathname} />
+          <Link name="Dashboard" link="/dashboard" pathname={location.pathname} />
+          <Link name="Educação Financeira" link="/about" pathname={location.pathname} />
           <Link
-            name="Sobre"
-            link="/about"
+            name="Recompensas"
+            link="/contate-nos"
             pathname={location.pathname}
           />
-          <Link name="Contatos" link="/contate-nos" pathname={location.pathname} />
         </ul>
       </nav>
 
-      <ul className="flex items-center justify-end gap-2 w-full md:w-1/4">
+      <ul className="flex  items-center justify-end gap-2 w-full md:w-1/4">
         <a
-          className="flex h-10 text-sm bg-primary transition ease-in-out text-white hover:transition hover:ease-in-out font-bold items-center rounded px-4 border border-primary hover:bg-primary-hover"
+          className="flex h-10 text-sm min-w-[124px] justify-center bg-primary transition ease-in-out text-white hover:transition hover:ease-in-out font-bold items-center rounded px-4 border border-primary hover:bg-primary-hover"
           href="/login"
         >
-          LOGIN
-        </a>
-        <a
-          className="flex h-10 whitespace-nowrap text-sm text-white transition ease-in-out font-bold items-center rounded px-4 border border-primary hover:bg-primary-hover"
-          href="/signup"
-        >
-          CRIAR CONTA
+          Sair
         </a>
       </ul>
     </header>

@@ -3,7 +3,7 @@ import { useAuth } from './hooks/useAuth';
 import { UserResponse } from '../services/user/type/user-response.interface';
 
 type SignInData = {
-  email: string;
+  login: string;
   password: string;
 };
 
