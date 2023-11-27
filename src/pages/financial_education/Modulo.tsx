@@ -1,9 +1,9 @@
-import { UserNavbar } from '../../components/user/UserNavbar'
+import { Sidebar } from '../../components/Sidebar'
 
 export const FinancialModulo = () => {
   return (
     <>
-      <UserNavbar />
+      <Sidebar />
       <div className="max-w-[1180px] p-5 flex flex-col w-full m-auto items-start justify-between">
         <h1 className="font-bold text-gray-500 text-3xl">Renda</h1>
         <div className="flex mt-4 flex-col gap-4">

@@ -13,7 +13,7 @@ export const ProfileLink = ({ path, title, description }: ProfileLinkProps) => {
       href={path}
       className="p-8 rounded flex-col justify-center hover:bg-white hover:bg-opacity-5 focus:outline-none focus:ring-2 focus:ring-primary-border"
     >
-      <div className="flex gap-8 items-center">
+      <div className="flex justify-between gap-8 items-center">
         <div className="flex flex-col gap-4">
           <p className="text-primary text-lg">{title}</p>
           <span className="text-white">{description}</span>

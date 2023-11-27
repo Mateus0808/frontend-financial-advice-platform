@@ -10,6 +10,9 @@ export default {
         'primary-text': '#a8a8b3',
         'primary-gradient-top': 'linear-gradient(180deg,#1d1929,rgba(18,18,20,0))',
       },
+			fontFamily: {
+				'poppins': ['Poppins', 'sans-serif']
+			}
     },
   },
   plugins: [],

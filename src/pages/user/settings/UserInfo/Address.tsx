@@ -86,7 +86,7 @@ export const Address = () => {
           </div>
         </div>
 
-        <div className="w-[154px] h-14 flex items-center justify-start">
+        <div className="w-[154px] h-12 flex items-center justify-start">
           <Button title="Salvar" type="submit" />
         </div>
       </Form>

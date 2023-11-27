@@ -2,6 +2,7 @@ import { IoIosArrowForward } from 'react-icons/io'
 import { IconContext } from 'react-icons'
 import { useState } from 'react'
 import { UserNavbar } from '../../components/user/UserNavbar'
+import { Sidebar } from '../../components/Sidebar'
 
 type LiProps = {
   title: string
@@ -39,10 +40,10 @@ export const FinancialEducation = () => {
   }
 
   return (
-    <>
-      <UserNavbar />
-      <div className="max-w-[1180px] p-5 flex flex-col w-full m-auto items-start justify-between">
-        <h1 className="font-bold text-2xl">Educação financeira</h1>
+    <div className='flex'>
+      <Sidebar />
+      <div className="max-w-[1180px] min-h-screen p-5 flex flex-col w-full m-auto items-start">
+        <h1 className="font-bold text-2xl mt-12">Educação financeira</h1>
         <div className="flex flex-col md:flex-row mt-6 w-full">
           <ul className="flex relative flex-col w-full gap-4">
             <div>
@@ -55,7 +56,7 @@ export const FinancialEducation = () => {
                 stateLevel={beginnerLevel.level}
               />
               {beginnerLevel.level == 'beginner' && beginnerLevel.state && (
-                <div className="md:w-2/5 md:pl-6 md:absolute md:right-20 md:top-0">
+                <div className="lg:w-2/5 lg:pl-6 lg:absolute lg:right-20 lg:top-0">
                   <ul className="flex flex-col w-full pl-[4.5rem] ">
                     <li onClick={() => {}} className="h-14 pl-4 rounded w-full flex gap-2 items-center hover:bg-white hover:bg-opacity-5">
                       <IconContext.Provider
@@ -160,7 +161,7 @@ export const FinancialEducation = () => {
                 stateLevel={beginnerLevel.level}
               />
               {beginnerLevel.level == 'intermediary' && beginnerLevel.state && (
-                <div className="md:w-2/5 md:pl-6 md:absolute md:right-20 md:top-0">
+                <div className="lg:w-2/5 lg:pl-8 lg:absolute lg:right-20 lg:top-0">
                   <ul className="flex flex-col w-full pl-[3.5rem] ">
                     <li className="h-14 px-4 rounded w-full flex justify-center items-center hover:bg-white hover:bg-opacity-5">
                       <a href="#" className="w-full h-full flex items-center">
@@ -173,12 +174,12 @@ export const FinancialEducation = () => {
                       </a>
                     </li>
                     <li className="h-14 px-4 rounded w-full flex justify-center items-center hover:bg-white hover:bg-opacity-5">
-                      <a href="#" className="w-full h-full flex items-center">
+                      <a href="#" className="w-full whitespace-nowrap h-full flex items-center">
                         Diversificação de Investimentos
                       </a>
                     </li>
                     <li className="h-14 pl-4 rounded w-full flex justify-center items-center hover:bg-white hover:bg-opacity-5">
-                      <a href="#" className="w-full h-full flex items-center">
+                      <a href="#" className="w-full whitespace-nowrap h-full flex items-center">
                         Planejamento de Aposentadoria
                       </a>
                     </li>
@@ -270,6 +271,6 @@ export const FinancialEducation = () => {
           </ul>
         </div>
       </div>
-    </>
+    </div>
   )
 }

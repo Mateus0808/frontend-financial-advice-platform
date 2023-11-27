@@ -4,6 +4,7 @@ import { PersonalInfo } from './PersonalInfo'
 import { ModalMyAccess } from '../../../../components/user/ModalMyAccess'
 import { Address } from './Address'
 import { UserNavbar } from '../../../../components/user/UserNavbar'
+import { Sidebar } from '../../../../components/Sidebar'
 
 export const UserInfo = () => {
   const [openPasswordModal, setOpenPasswordModal] = useState(false)
@@ -12,13 +13,13 @@ export const UserInfo = () => {
     setOpenPasswordModal(!openPasswordModal)
   }
   return (
-    <>
-      <UserNavbar />
+    <div className='flex'>
+      <Sidebar />
       {openPasswordModal && (
         <ModalMyAccess setShowModal={setOpenPasswordModal} />
       )}
-      <div className="max-w-[1180px] p-5 flex w-full m-auto items-start justify-between">
-        <div className="sticky bg-[#202024] hidden w-[325px] top-32 mr-16 rounded py-2 md:block">
+      <div className="max-w-[1180px] ml-[76px] md:ml-[298px] lg:ml-[324px] xl:ml-[364px] p-5 flex w-full m-auto items-start justify-between">
+        <div className="sticky bg-[#202024] hidden w-[325px] top-32 mr-16 rounded py-2 xl:block">
           <a
             href=""
             className="text-white w-full px-8 rounded bg-[#202024] py-4 border-solid block cursor-pointer hover:bg-black hover:bg-opacity-20"
@@ -44,6 +45,6 @@ export const UserInfo = () => {
           <Address />
         </div>
       </div>
-    </>
+    </div>
   )
 }
