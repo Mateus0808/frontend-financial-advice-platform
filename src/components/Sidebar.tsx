@@ -13,7 +13,7 @@ import { IconReward } from './icons/Rewards'
 export const Sidebar = () => {
   const { signOut } = useAuthenticated()
   return (
-    <div className="max-w-sm min-h-screen fixed top-0 left-0 bg-[#202024] flex flex-col md:flex">
+    <div className="max-w-sm min-h-screen sticky top-0 left-0 bg-[#202024] flex flex-col md:flex">
       <div className="flex flex-col">
 				<div className='w-full min-h-[6rem] flex justify-center items-center'>
 					<img className='w-16 md:w-24' src="/logo.png" alt="" />
@@ -29,7 +29,7 @@ export const Sidebar = () => {
             <li className="group whitespace-nowrap cursor-pointer px-2 rounded items-center h-12 gap-2 hover:bg-white hover:bg-opacity-10">
               <a
                 href="/home/educacao-financeira"
-                className="flex gap-4 items-center h-full w-full"
+                className="flex gap-4 items-center text-white h-full w-full"
               >
                 <IconContext.Provider
                   value={{
@@ -46,7 +46,7 @@ export const Sidebar = () => {
             </li>
 
             <li className="group cursor-pointer whitespace-nowrap px-2 rounded h-12 gap-2 hover:bg-white hover:bg-opacity-10">
-              <a href="" className="flex gap-4 items-center h-full">
+              <a href="" className="flex gap-4 text-white items-center h-full">
 								<IconsTracking />
 
                 <span className="hidden group-hover:text-primary md:block">
@@ -56,7 +56,7 @@ export const Sidebar = () => {
             </li>
 
             <li className="group cursor-pointer whitespace-nowrap flex px-2 rounded items-center h-12 gap-2 hover:bg-white hover:bg-opacity-10">
-              <a href="" className="flex gap-4 items-center h-full">
+              <a href="" className="flex gap-4 text-white items-center h-full">
 								<IconReward />
 
                 <span className="hidden md:block group-hover:text-primary">Recompensas</span>
@@ -64,7 +64,7 @@ export const Sidebar = () => {
             </li>
 
             <li className="group cursor-pointer whitespace-nowrap flex px-2 rounded items-center h-12 gap-2 hover:bg-white hover:bg-opacity-10">
-              <a href="/home/transacoes" className="flex gap-4 items-center h-full">
+              <a href="/home/transacoes" className="flex gap-4 items-center text-white h-full">
                 <IconContext.Provider
                   value={{
                     color: 'bg-gray-600',
@@ -88,7 +88,7 @@ export const Sidebar = () => {
             <li className="group whitespace-nowrap cursor-pointer px-2 rounded h-12  hover:bg-white hover:bg-opacity-10">
               <a
                 href="/home/configuracoes"
-                className="flex items-center h-12 gap-2"
+                className="flex items-center text-white h-12 gap-2"
               >
                 <IconContext.Provider
                   value={{
@@ -102,7 +102,7 @@ export const Sidebar = () => {
                 </span>
               </a>
             </li>
-            <li className="group whitespace-nowrap cursor-pointer flex px-2 rounded items-center h-12 gap-2 hover:bg-white hover:bg-opacity-10">
+            <li className="group whitespace-nowrap text-white cursor-pointer flex px-2 rounded items-center h-12 gap-2 hover:bg-white hover:bg-opacity-10">
               <button
                 onClick={() => signOut()}
                 className="flex items-center h-12 gap-2"

@@ -1,73 +1,86 @@
-import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import {
+	createContext,
+	ReactNode,
+	useContext,
+	useEffect,
+	useState,
+} from "react";
 import apiClient from "../services/api-client.service";
+import { errorNotify, successNotify } from "../utils/notify";
+import { getTransactionsByUserId } from "../services/transactions/get-transactions-by-user-id.service";
+import { useAuthenticated } from "../contexts/AuthContext";
 
 interface TransactionResponse {
-  id: number,
-  title: string,
-  type: string,
-  category: string,
-  amount: number,
-  createdAt: string
+	id: number;
+	title: string;
+	transactionType: string;
+	category: string;
+	value: number;
+	createdAt: Date;
 }
 
-type TransactionRequest = Omit<TransactionResponse, 'id' | 'createdAt'>
+type TransactionRequest = Omit<TransactionResponse, "id" | "createdAt">;
 // type TransactionRequest = Pick<TransactionResponse, 'title' | 'amount' | 'category' | 'type'>
 
 interface TransactionsProviderProps {
-  children: ReactNode
+	children: ReactNode;
 }
 
 interface TransactionsContextProps {
-  transactions: TransactionResponse[],
-  createTransaction: (transaction: TransactionRequest) => Promise<void>
+	transactions: TransactionResponse[];
+	createTransaction: (transaction: TransactionRequest) => Promise<void>;
+	fetchUserTransactions: (userId: number) => Promise<void>;
 }
 
-const TransactionsContext = createContext({} as TransactionsContextProps)
+const TransactionsContext = createContext({} as TransactionsContextProps);
 
-export function TransactionsProvider ({ children }: TransactionsProviderProps) {
-  const [transactions, setTransaction] = useState<TransactionResponse[]>([])
+export function TransactionsProvider({ children }: TransactionsProviderProps) {
+	const [transactions, setTransactions] = useState<TransactionResponse[]>([]);
+	const { signOut } = useAuthenticated();
 
-  useEffect(() => {
-    setTransaction([{
-      id: 1,
-      title: 'string',
-      type: 'string',
-      category: 'string',
-      amount: 500,
-      createdAt: '2023-11-11T23:32:27+00:00'
-    }])
-    setTransaction([{
-      id: 2,
-      title: 'string',
-      type: 'string',
-      category: 'string',
-      amount: 1000,
-      createdAt: '2023-11-11T23:32:27+00:00'
-    }])
-    // apiClient.get('/transactions')
-    //   .then(response => setTransaction(response.data.transactions))     
-  }, []);
+	async function fetchUserTransactions(userId: number) {
+		const response = await getTransactionsByUserId(userId);
+		if (response.statusCode === 200) {
+			setTransactions(response.data);
+			return;
+		}
+		if (response.statusCode === 401) {
+			errorNotify("Autentique-se novamente!");
+			await signOut();
+			return;
+		}
+		errorNotify("Falha ao recuperar transações");
+	}
 
-  async function createTransaction (transactionRequest: TransactionRequest) {
-    const response = await apiClient.post('/transactions', {
-      ...transactionRequest,
-      createdAt: new Date()
-    })
-    const { transaction } = response.data
+	async function createTransaction(transactionRequest: TransactionRequest) {
+		const response = await apiClient.post(
+			"/transactions/create-transaction/mateus@gmail.com",
+			{
+				...transactionRequest,
+				createdAt: new Date(),
+			}
+		);
+		const transaction = response.data;
+		if (transaction.error) {
+			errorNotify("Erro ao adicionar transação");
+			return;
+		}
 
-    setTransaction([...transactions, transaction])
-  }
+		successNotify("Transação criada com sucesso");
+		setTransactions([...transactions, transaction]);
+	}
 
-  return (
-    <TransactionsContext.Provider value={{ transactions, createTransaction }}>
-      {children}
-    </TransactionsContext.Provider>
-  )
+	return (
+		<TransactionsContext.Provider
+			value={{ transactions, createTransaction, fetchUserTransactions }}
+		>
+			{children}
+		</TransactionsContext.Provider>
+	);
 }
 
+export function useTransactions() {
+	const context = useContext(TransactionsContext);
 
-export function useTransactions () {
-  const context = useContext(TransactionsContext)
-
-  return context
+	return context;
 }

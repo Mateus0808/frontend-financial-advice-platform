@@ -9,10 +9,10 @@ export function Summary() {
 
   const summary = transactions.reduce(
     (acc, transaction) => {
-      if (transaction.type === 'deposit') {
-        acc.deposit += transaction.amount
+      if (transaction.transactionType === 'DEPOSIT') {
+        acc.deposit += transaction.value
       } else {
-        acc.withdraw += transaction.amount
+        acc.withdraw += transaction.value
       }
       acc.total = acc.deposit - acc.withdraw
       return acc
@@ -26,33 +26,33 @@ export function Summary() {
 
   return (
     <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-      <div className="bg-black py-6 px-4 border rounded text-white">
+      <div className="bg-gray-300 py-6 px-4 border rounded text-white">
         <header className="flex items-center justify-between">
-          <p>Entradas</p>
+          <p className='text-black font-semibold'>Entradas</p>
           <img src={incomeImg} alt="Entradas" />
         </header>
-        <strong className="whitespace-nowrap block mt-4 text-2xl leading-10 md:text-3xl">
+        <strong className="whitespace-nowrap text-black font-semibold block mt-4 text-2xl leading-10 md:text-3xl">
           {new Intl.NumberFormat('pt-BR', {
             style: 'currency',
             currency: 'BRL',
           }).format(summary.deposit)}
         </strong>
       </div>
-      <div className='bg-black py-6 px-4 border rounded text-white'>
+      <div className='bg-gray-300 py-6 px-4 border rounded text-white'>
         <header className="flex items-center justify-between">
-          <p>Saídas</p>
+          <p className='text-black font-semibold'>Saídas</p>
           <img src={outcomeImg} alt="Saídas" />
         </header>
-        <strong className="whitespace-nowrap block mt-4 text-2xl leading-10">
+        <strong className="whitespace-nowrap text-black font-semibold block mt-4 text-2xl leading-10">
           {new Intl.NumberFormat('pt-BR', {
             style: 'currency',
             currency: 'BRL',
           }).format(-summary.withdraw)}
         </strong>
       </div>
-      <div className="bg-green-600 text-white py-6 px-4 border rounded">
+      <div className={`text-white py-6 px-4 border rounded ${summary.total >= 0 ? 'bg-green-600' : 'bg-red-600'}`}>
         <header className="flex items-center w-full justify-between">
-          <p>Total</p>
+          <p className='font-semibold'>Total</p>
           <img src={totalImg} alt="Total" />
         </header>
         <strong className="whitespace-nowrap block mt-4 text-2xl leading-10">

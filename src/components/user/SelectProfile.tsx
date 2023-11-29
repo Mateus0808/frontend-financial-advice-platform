@@ -31,7 +31,7 @@ export const SelectProfile = ({ name, children, ...rest }: SelectProps) => {
       id={name}
       name={name}
       {...rest}
-      className="w-full bg-[#121214] text-white px-3 h-14 py-2 border-transparent border-2 rounded-lg focus:outline-none focus:border-primary-border"
+      className="w-full bg-gray-300 text-gray-600 px-3 h-14 py-2 border-transparent border-2 rounded-lg focus:outline-none focus:border-primary-border"
     >
       {children}
     </select>

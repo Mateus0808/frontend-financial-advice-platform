@@ -73,7 +73,7 @@ export const FinancialEducation = () => {
                     <ul className="flex flex-col w-full pl-[3rem] ">
                       <li className="h-12 w-full flex flex-col justify-center items-center">
                         <a
-                          href="/home/modulo-financas"
+                          href="/home/educacao-financeira/despesas"
                           className="w-full whitespace-nowrap h-full px-4 flex rounded gap-2 items-center hover:bg-white hover:bg-opacity-5"
                         >
                           Renda

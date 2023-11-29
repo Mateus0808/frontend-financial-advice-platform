@@ -5,15 +5,14 @@ import { SelectProfile } from "../../../../components/user/SelectProfile";
 import { useRef } from "react";
 import { UserInput } from "../../../../components/user/UserInput";
 import * as Yup from "yup";
+import { UserResponse } from "../../../../services/user/type/user-response.interface";
+import { CardContainer } from "./CardContainer";
 
 type PersonalInfoProps = {
-	name: string;
-	surname: string;
-	username: string;
-	gender: string;
+	user: UserResponse | undefined;
 };
 
-export const PersonalInfo = () => {
+export const PersonalInfo = ({ user }: PersonalInfoProps) => {
 	const formRef = useRef(null);
 
 	const handleSubmit = async (data: PersonalInfoProps) => {
@@ -34,14 +33,14 @@ export const PersonalInfo = () => {
 				abortEarly: false,
 			});
 			console.log("formRef", data);
-			await signIn(data);
 		} catch (err) {
 			if (err instanceof Yup.ValidationError) {
 				console.log(err);
 				const errorMessages = {};
 
 				err.inner.forEach((error) => {
-					errorMessages[error.path] = error.message;
+					if(error) 
+					errorMessages[error?.path] = error.message;
 				});
 
 				formRef.current.setErrors(errorMessages);
@@ -50,8 +49,8 @@ export const PersonalInfo = () => {
 	};
 
 	return (
-		<div className="flex p-8 flex-col rounded bg-[#202024]">
-			<h1 className=" text-white font-bold text-xl">Informações Pessoal</h1>
+		<CardContainer id="personalInfo">
+			<h1 className="text-gray-600 font-bold text-xl">Informações Pessoal</h1>
 			<Form
 				ref={formRef}
 				className="w-full pt-7 rounded grid grid-cols-1 gap-7 lg:grid-cols-2"
@@ -63,8 +62,7 @@ export const PersonalInfo = () => {
 						name="name"
 						type="text"
 						id="name"
-						className="w-full text-white text-md h-14 rounded px-4 bg-[#121214] focus:outline-none focus:ring-2 focus:ring-primary-border"
-						defaultValue={"Mateus"}
+						defaultValue={user?.firstName}
 					/>
 				</div>
 				<div className="">
@@ -73,7 +71,7 @@ export const PersonalInfo = () => {
 						type="text"
 						name="surname"
 						id="surname"
-						defaultValue={"dos Santos Loiola"}
+						defaultValue={user?.lastName}
 					/>
 				</div>
 
@@ -83,12 +81,12 @@ export const PersonalInfo = () => {
 						type="text"
 						name="username"
 						id="username"
-						defaultValue={"mateus08"}
+						defaultValue={user?.username}
 					/>
 				</div>
 				<div>
 					<Label label="Gênero" htmlFor="gender" />
-					<SelectProfile id="gender" name="gender">
+					<SelectProfile id="gender" name="gender" value={user?.gender}>
 						<option value="">Selecione o gênero...</option>
 						<option value="MALE">Masculino</option>
 						<option value="FEMALE">Feminino</option>
@@ -100,6 +98,6 @@ export const PersonalInfo = () => {
 					<Button title="Salvar" type="submit" />
 				</div>
 			</Form>
-		</div>
+		</CardContainer>
 	);
 };

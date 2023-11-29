@@ -1,15 +1,24 @@
+export interface TransactionResponse {
+	id: number;
+	title: string;
+	value: number;
+	category: string;
+	transactionType: "DEPOSIT" | "WITHDRAW";
+	createdAt: Date;
+	updatedAt: Date;
+}
+
 export interface UserResponse {
-  id: string
-  username: string
-  name: string
-  surname: string
-  email: string
-  password: string
-  birthDate: Date
-  gender: 'MALE' | 'FEMALE' | 'OTHER'
-  educationLevel: string
-  annualIncome: number
-  role: 'ADMIN' | 'USER'
-  createdAt: Date
-  updatedAt: Date
+	id: number;
+	username: string;
+	firstName: string;
+	lastName: string;
+	email: string;
+	password: string;
+	birthDate: Date;
+	gender: "MALE" | "FEMALE" | "OTHER";
+	educationLevel: string;
+	annualIncome: number;
+	roles: ["ROLE_ADMIN" | "ROLE_USER"];
+	transactions: TransactionResponse[];
 }

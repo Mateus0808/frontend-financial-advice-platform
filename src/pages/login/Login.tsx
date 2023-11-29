@@ -9,7 +9,7 @@ import { useRef } from "react";
 import * as Yup from "yup";
 
 interface LoginProps {
-	login: string;
+	email: string;
 	password: string;
 }
 
@@ -21,11 +21,11 @@ export const Login = () => {
 	const handleSubmit = async (data: LoginProps) => {
 		try {
 			const schema = Yup.object({
-				login: Yup.string()
+				email: Yup.string()
 					.email("Enter a valid email")
 					.required("Email is required"),
 				password: Yup.string()
-					.min(8, "Password minimum 8 characters")
+					.min(6, "Password minimum 8 characters")
 					.required("Password is required"),
 			});
 
@@ -34,10 +34,9 @@ export const Login = () => {
 			});
 			console.log("formRef", data);
 			await signIn(data);
-			
 		} catch (err) {
 			if (err instanceof Yup.ValidationError) {
-				console.log(err)
+				console.log(err);
 				const errorMessages = {};
 
 				err.inner.forEach((error) => {
@@ -70,8 +69,8 @@ export const Login = () => {
 								<Label label="Email" htmlFor="login" />
 								<Input
 									type="email"
-									id="login"
-									name="login"
+									id="email"
+									name="email"
 									placeholder="test@example.com"
 								/>
 							</div>

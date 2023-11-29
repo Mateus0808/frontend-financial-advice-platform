@@ -7,23 +7,23 @@ import { useAuthenticated } from "../../contexts/AuthContext";
 import { useRef } from "react";
 // import { useNavigate } from 'react-router-dom'
 import { createUserService } from "../../services/user/create-user.service";
-import { errorNotify } from "../../utils/notify";
+import { errorNotify, successNotify } from "../../utils/notify";
 import { CreateUserParams } from "../../services/user/type/create-user.interface";
 import { Navbar } from "../../components/Navbar";
 import * as Yup from "yup";
+import { useNavigate } from "react-router-dom";
 
 export const SignUp = () => {
-	const { signIn } = useAuthenticated();
 	const formRef = useRef(null);
-	// const navigate = useNavigate()
+	const navigate = useNavigate();
 
 	async function handleSubmit(data: CreateUserParams) {
 		try {
 			const schema = Yup.object({
-				name: Yup.string()
+				firstName: Yup.string()
 					.min(2, "Name minimum 2 characters")
 					.required("Name is required"),
-				surname: Yup.string().required("O sobrenome é obrigatório"),
+				lastName: Yup.string().required("O sobrenome é obrigatório"),
 				username: Yup.string()
 					.min(2, "Nome de usuário mínimo de 2 caracteres")
 					.max(12, "Nome de usuário máximo de 12 caracteres")
@@ -31,7 +31,7 @@ export const SignUp = () => {
 				gender: Yup.string().required("Selecione o gênero"),
 				birthDate: Yup.string().required("Data de nascimento é obrigatório"),
 				educationLevel: Yup.string().required("Selecione o nível de educação"),
-				login: Yup.string()
+				email: Yup.string()
 					.email("Enter a valid email")
 					.required("Email is required"),
 				password: Yup.string()
@@ -47,11 +47,8 @@ export const SignUp = () => {
 				errorNotify("Erro ao criar usuário");
 				return;
 			}
-			console.log("createdUser", createdUser);
-			await signIn({
-				login: createdUser.data.login,
-				password: data.password,
-			});
+			successNotify("Usuário registrado com sucesso");
+			navigate("/login");
 		} catch (err) {
 			if (err instanceof Yup.ValidationError) {
 				console.log(err);
@@ -93,8 +90,8 @@ export const SignUp = () => {
 										<Label label="Nome" htmlFor="name" />
 										<Input
 											type="text"
-											id="name"
-											name="name"
+											id="firstName"
+											name="firstName"
 											placeholder="Digite seu nome..."
 										/>
 									</div>
@@ -102,8 +99,8 @@ export const SignUp = () => {
 										<Label label="Sobrenome" htmlFor="surname" />
 										<Input
 											type="text"
-											id="surname"
-											name="surname"
+											id="lastName"
+											name="lastName"
 											placeholder="Sobrenome..."
 										/>
 									</div>
@@ -156,8 +153,8 @@ export const SignUp = () => {
 										<Label label="E-mail" htmlFor="login" />
 										<Input
 											type="email"
-											id="login"
-											name="login"
+											id="email"
+											name="email"
 											placeholder="Digite seu e-mail..."
 										/>
 									</div>

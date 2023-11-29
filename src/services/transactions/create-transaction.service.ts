@@ -1,18 +1,20 @@
 import { AxiosError } from "axios";
 
-import { apiSetup } from "../api-setup.service";
+import apiClient from "../api-client.service";
 
 interface ErrorResponse {
 	message: string;
 }
 
-export const createUserService = async (data: any) => {
+export const createTransactionService = async (data: any) => {
 	try {
-		data.birthDate = new Date(data.birthDate);
-		const user = await apiSetup.post("/auth/register-user", data);
+		const transaction = await apiClient.post(
+			`/transactions/create-transaction/mateus@gmail.com`,
+			data
+		);
 
 		return {
-			data: user.data,
+			data: transaction.data,
 			error: false,
 		};
 	} catch (error: any) {
