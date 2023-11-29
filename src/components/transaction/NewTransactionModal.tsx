@@ -5,7 +5,7 @@ import { darken } from "polished";
 import closeImg from "../../assets/close.svg";
 import incomeImg from "../../assets/income.svg";
 import outcomeImg from "../../assets/outcome.svg";
-import { useTransactions } from "../../hooks/useTransaction";
+import { useTransactions } from "../../contexts/UseTransaction";
 
 interface NewTransactionModalProps {
 	isOpen: boolean;

@@ -7,7 +7,7 @@ interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
 
 export const Select = ({ name, children, ...rest }: SelectProps) => {
   const selectRef = useRef(null)
-  const { fieldName, registerField, error } = useField(name)
+  const { fieldName, registerField, error, clearError } = useField(name)
 
   useEffect(() => {
     registerField({
@@ -31,8 +31,9 @@ export const Select = ({ name, children, ...rest }: SelectProps) => {
 				ref={selectRef}
 				id={name}
 				name={name}
+				onChange={() => clearError()}
 				{...rest}
-				className={`w-full bg-gray-200 text-gray-600 px-3 h-11 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-border ${error ? 'border-red-400' : ''}`}
+				className={`w-full bg-gray-200 text-gray-600 px-4 h-14 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-border ${error ? 'border-red-400' : ''}`}
 			>
 				{children}
 			</select>

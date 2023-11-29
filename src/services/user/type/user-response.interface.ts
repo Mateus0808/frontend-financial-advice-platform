@@ -1,12 +1,4 @@
-export interface TransactionResponse {
-	id: number;
-	title: string;
-	value: number;
-	category: string;
-	transactionType: "DEPOSIT" | "WITHDRAW";
-	createdAt: Date;
-	updatedAt: Date;
-}
+import { TransactionResponse } from "../../transactions/type/response/transaction-response.interface";
 
 export interface UserResponse {
 	id: number;

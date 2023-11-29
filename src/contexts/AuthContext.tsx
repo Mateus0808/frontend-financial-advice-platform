@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useContext } from "react";
 import { SignInData, useAuth } from "./hooks/useAuth";
 import { UserResponse } from "../services/user/type/user-response.interface";
+import { UpdateEmailRequest } from "../services/requests/user/update-user.interface";
 
 type AuthContextType = {
 	isAuthenticated: boolean;
@@ -9,6 +10,8 @@ type AuthContextType = {
 	signOut: () => Promise<void>;
 	isLoggedIn: () => Promise<void>;
 	getUserById: () => Promise<void>;
+	updateUser: (userId: number, data: Partial<UserResponse>) => Promise<UserResponse | any>;
+	updateUserEmail: (userId: number, email: UpdateEmailRequest) => Promise<UserResponse | any>;
 	loading: boolean;
 	setUser: React.Dispatch<React.SetStateAction<UserResponse | undefined>>;
 };
@@ -28,6 +31,8 @@ export function AuthProvider({ children }: AuthProvider) {
 		isAuthenticated,
 		loading,
 		user,
+		updateUser,
+		updateUserEmail,
 		getUserById,
 	} = useAuth();
 
@@ -41,6 +46,8 @@ export function AuthProvider({ children }: AuthProvider) {
 				loading,
 				signIn,
 				signOut,
+				updateUser,
+				updateUserEmail,
 				getUserById,
 			}}
 		>

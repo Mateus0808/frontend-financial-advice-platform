@@ -1,7 +1,7 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import { UserHome } from "../pages/user/UserHome";
-import { UserSettings } from "../pages/user/settings/UserSettings";
-import { UserInfo } from "../pages/user/settings/UserInfo";
+import { UserSettings } from "../pages/settings";
+import { UserInfo } from "../pages/settings/personalInformation";
 import { FinancialEducation } from "../pages/financial_education";
 import { Login } from "../pages/login/Login";
 import { SignUp } from "../pages/signup";
@@ -23,7 +23,10 @@ export function UserRouter() {
 					path="/home/educacao-financeira"
 					element={<FinancialEducation />}
 				/>
-				<Route path="/home/educacao-financeira/despesas" element={<FinancialModulo />} />
+				<Route
+					path="/home/educacao-financeira/despesas"
+					element={<FinancialModulo />}
+				/>
 			</Routes>
 		</AuthProvider>
 	);

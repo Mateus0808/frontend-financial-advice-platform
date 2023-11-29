@@ -5,7 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { userLoginService } from "../../services/user/auth-user.service";
 import { getUserByIdService } from "../../services/user/get-user-by-id.service";
 import { errorNotify, successNotify } from "../../utils/notify";
-// import { errorNotify } from '../../utils/notify';
+import { updateUserService } from "../../services/user/update-user.service";
+import { UpdateEmailRequest } from "../../services/requests/user/update-user.interface";
+import { updateUserEmailService } from "../../services/user/update-user-email.service";
 
 export type SignInData = {
 	email: string;
@@ -14,7 +16,7 @@ export type SignInData = {
 
 export function useAuth() {
 	const navigate = useNavigate();
-	const [user, setUser] = useState<UserResponse>();
+	const [user, setUser] = useState<UserResponse | any>();
 	const [loading, setLoading] = useState(true);
 	const isAuthenticated = !!user;
 
@@ -56,6 +58,34 @@ export function useAuth() {
 		}
 	}
 
+	async function updateUser(userId: number, data: Partial<UserResponse>) {
+		try {
+			const response = await updateUserService(userId, data);
+			if (response.error) {
+				errorNotify("Erro ao atualizar usuário");
+				return;
+			}
+			setUser(response.data)
+			successNotify("Usuário atualizado com sucesso")
+		} catch(error: any) {
+			errorNotify(error);
+		}
+	}
+
+	async function updateUserEmail(userId: number, data: UpdateEmailRequest) {
+		try {
+			const response = await updateUserEmailService(userId, data);
+			if (response.error) {
+				errorNotify("Erro ao atualizar usuário");
+				return;
+			}
+			setUser(response.data)
+			successNotify("Usuário atualizado com sucesso")
+		} catch(error: any) {
+			errorNotify(error);
+		}
+	}
+
 	async function signIn({ email, password }: SignInData) {
 		setLoading(true);
 		try {
@@ -94,6 +124,8 @@ export function useAuth() {
 		user,
 		loading,
 		setUser,
+		updateUser,
+		updateUserEmail,
 		getUserById,
 	};
 }

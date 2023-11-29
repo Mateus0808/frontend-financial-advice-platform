@@ -25,19 +25,17 @@ export const UserInput = ({ name, ...rest }: InputProps) => {
 		});
 	}, [fieldName, registerField]);
 
-
-	const handleError = () => {
-		clearError()
-	}
 	return (
 		<div className="flex flex-col">
 			<input
 				ref={inputRef}
 				id={name}
 				name={name}
-				onChange={() => handleError()}
+				onChange={() => clearError()}
 				{...rest}
-				className="w-full text-black text-md h-14 rounded px-4 bg-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-border"
+				className={`w-full bg-gray-300 text-gray-600 px-4 py-2 h-14 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-border ${
+					error ? "border-red-400" : ""
+				}`}
 			/>
 			<span className="text-red-400 text-sm h-2">{error ? error : ''}</span>
 		</div>

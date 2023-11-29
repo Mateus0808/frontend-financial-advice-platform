@@ -1,12 +1,21 @@
 import { Form } from "@unform/web";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Label } from "../../components/Label";
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
 import { useAuthenticated } from "../../contexts/AuthContext";
-import { Navbar } from "../../components/Navbar";
+import { Navbar } from "../../components/navbar";
 import { useRef } from "react";
 import * as Yup from "yup";
+
+const schema = Yup.object({
+	email: Yup.string()
+		.email("Enter a valid email")
+		.required("Email is required"),
+	password: Yup.string()
+		.min(6, "Password minimum 8 characters")
+		.required("Password is required"),
+});
 
 interface LoginProps {
 	email: string;
@@ -20,27 +29,16 @@ export const Login = () => {
 
 	const handleSubmit = async (data: LoginProps) => {
 		try {
-			const schema = Yup.object({
-				email: Yup.string()
-					.email("Enter a valid email")
-					.required("Email is required"),
-				password: Yup.string()
-					.min(6, "Password minimum 8 characters")
-					.required("Password is required"),
-			});
-
 			await schema.validate(data, {
 				abortEarly: false,
 			});
-			console.log("formRef", data);
+
 			await signIn(data);
 		} catch (err) {
 			if (err instanceof Yup.ValidationError) {
-				console.log(err);
 				const errorMessages = {};
-
 				err.inner.forEach((error) => {
-					errorMessages[error.path] = error.message;
+					errorMessages[error.path!] = error.message;
 				});
 
 				formRef.current.setErrors(errorMessages);
@@ -89,19 +87,18 @@ export const Login = () => {
 									<Button title="ENTRAR" type="submit" />
 								</div>
 								<div className="flex justify-between mt-2">
-									<a
-										href="#"
+									<Link
+										to="#"
 										className="text-sm font-bold text-primary hover:text-primary-hover rounded-md focus:outline-none focus:ring-2 focus:ring-primary-hover"
 									>
 										Esqueceu a senha?
-									</a>
-									<button
-										onClick={() => navigate("/signup")}
-										type="submit"
+									</Link>
+									<Link
+										to="/signup"
 										className="text-sm font-bold text-primary hover:text-primary-hover rounded-md focus:outline-none focus:ring-2 focus:ring-primary-hover"
 									>
 										Registre-se
-									</button>
+									</Link>
 								</div>
 							</div>
 						</Form>

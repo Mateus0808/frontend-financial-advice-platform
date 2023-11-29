@@ -1,46 +1,55 @@
 import { Form } from "@unform/web";
-import { Button } from "../../../../components/Button";
-import { Label } from "../../../../components/Label";
-import { SelectProfile } from "../../../../components/user/SelectProfile";
-import { useRef } from "react";
-import { UserInput } from "../../../../components/user/UserInput";
 import * as Yup from "yup";
-import { UserResponse } from "../../../../services/user/type/user-response.interface";
+
+import { Button } from "../../../components/Button";
+import { Label } from "../../../components/Label";
+import { useRef } from "react";
+import { UserInput } from "../../../components/user/UserInput";
+import { UserResponse } from "../../../services/user/type/user-response.interface";
 import { CardContainer } from "./CardContainer";
+import { Select } from "../../../components/Select";
+import { useAuthenticated } from "../../../contexts/AuthContext";
+import { LoadingButton } from "../../../components/LoadingButton";
+
+const schema = Yup.object({
+	name: Yup.string()
+		.min(2, "Mínimo de 2 caracteres")
+		.required("Nome é obrigatório"),
+	surname: Yup.string().required("Sobrenome é obrigatório"),
+	username: Yup.string()
+		.min(2, "Nome de usuário mínimo de 2 caracteres")
+		.max(12, "Nome de usuário máximo de 12 caracteres")
+		.required("Nome de usuário é obrigatório"),
+	gender: Yup.string().required("Selecione o gênero"),
+});
+
+type UserRequest = Pick<
+	UserResponse,
+	"firstName" | "lastName" | "username" | "gender"
+>;
 
 type PersonalInfoProps = {
 	user: UserResponse | undefined;
 };
 
 export const PersonalInfo = ({ user }: PersonalInfoProps) => {
+	const { updateUser, loading } = useAuthenticated();
 	const formRef = useRef(null);
 
-	const handleSubmit = async (data: PersonalInfoProps) => {
+	const handleSubmit = async (data: UserRequest) => {
 		try {
-			const schema = Yup.object({
-				name: Yup.string()
-					.min(2, "Name minimum 2 characters")
-					.required("Name is required"),
-				surname: Yup.string().required("O sobrenome é obrigatório"),
-				username: Yup.string()
-					.min(2, "Nome de usuário mínimo de 2 caracteres")
-					.max(12, "Nome de usuário máximo de 12 caracteres")
-					.required("O nome de usuário é obrigatório"),
-				gender: Yup.string().required("Selecione o gênero"),
-			});
-
 			await schema.validate(data, {
 				abortEarly: false,
 			});
-			console.log("formRef", data);
+
+			if (user) await updateUser(user?.id, data);
 		} catch (err) {
 			if (err instanceof Yup.ValidationError) {
 				console.log(err);
 				const errorMessages = {};
 
 				err.inner.forEach((error) => {
-					if(error) 
-					errorMessages[error?.path] = error.message;
+					if (error.path) errorMessages[error?.path] = error.message;
 				});
 
 				formRef.current.setErrors(errorMessages);
@@ -74,7 +83,6 @@ export const PersonalInfo = ({ user }: PersonalInfoProps) => {
 						defaultValue={user?.lastName}
 					/>
 				</div>
-
 				<div>
 					<Label label="Nome de usuário" htmlFor="username" />
 					<UserInput
@@ -86,16 +94,19 @@ export const PersonalInfo = ({ user }: PersonalInfoProps) => {
 				</div>
 				<div>
 					<Label label="Gênero" htmlFor="gender" />
-					<SelectProfile id="gender" name="gender" value={user?.gender}>
+					<Select id="gender" name="gender" value={user?.gender}>
 						<option value="">Selecione o gênero...</option>
 						<option value="MALE">Masculino</option>
 						<option value="FEMALE">Feminino</option>
 						<option value="OTHER">Outro</option>
-					</SelectProfile>
+					</Select>
 				</div>
-
 				<div className="w-[154px] h-12 flex items-center justify-start">
-					<Button title="Salvar" type="submit" />
+					{!loading ? (
+						<Button title="Salvar" type="submit" />
+					) : (
+						<LoadingButton />
+					)}
 				</div>
 			</Form>
 		</CardContainer>

@@ -1,5 +1,5 @@
 import { Button } from "../components/Button";
-import { Navbar } from "../components/Navbar";
+import { Navbar } from "../components/navbar";
 
 import localLibrary from '../assets/local_library.svg'
 import receiptLong from '../assets/receipt_long.svg'

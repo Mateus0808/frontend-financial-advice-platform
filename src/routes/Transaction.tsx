@@ -1,7 +1,7 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import { AuthProvider } from "../contexts/AuthContext";
 import { Dashboard } from "../components/transaction/Dashboard";
-import { TransactionsProvider } from "../hooks/useTransaction";
+import { TransactionsProvider } from "../contexts/UseTransaction";
 
 export function TransactionRouter() {
 	const location = useLocation();

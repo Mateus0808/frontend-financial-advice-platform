@@ -1,17 +1,36 @@
 import { Form } from "@unform/web";
+import { useRef } from "react";
+import * as Yup from "yup";
+
 import { Label } from "../../components/Label";
 import { Input } from "../../components/Input";
 import { Select } from "../../components/Select";
 import { Button } from "../../components/Button";
-import { useAuthenticated } from "../../contexts/AuthContext";
-import { useRef } from "react";
-// import { useNavigate } from 'react-router-dom'
 import { createUserService } from "../../services/user/create-user.service";
 import { errorNotify, successNotify } from "../../utils/notify";
 import { CreateUserParams } from "../../services/user/type/create-user.interface";
-import { Navbar } from "../../components/Navbar";
-import * as Yup from "yup";
-import { useNavigate } from "react-router-dom";
+import { Navbar } from "../../components/navbar";
+import { useNavigate, Link } from "react-router-dom";
+
+const schema = Yup.object({
+	firstName: Yup.string()
+		.min(2, "Name minimum 2 characters")
+		.required("Name is required"),
+	lastName: Yup.string().required("O sobrenome é obrigatório"),
+	username: Yup.string()
+		.min(2, "Nome de usuário mínimo de 2 caracteres")
+		.max(12, "Nome de usuário máximo de 12 caracteres")
+		.required("O nome de usuário é obrigatório"),
+	gender: Yup.string().required("Selecione o gênero"),
+	birthDate: Yup.string().required("Data de nascimento é obrigatório"),
+	educationLevel: Yup.string().required("Selecione o nível de educação"),
+	email: Yup.string()
+		.email("Enter a valid email")
+		.required("Email is required"),
+	password: Yup.string()
+		.min(8, "Password minimum 8 characters")
+		.required("Password is required"),
+});
 
 export const SignUp = () => {
 	const formRef = useRef(null);
@@ -19,26 +38,6 @@ export const SignUp = () => {
 
 	async function handleSubmit(data: CreateUserParams) {
 		try {
-			const schema = Yup.object({
-				firstName: Yup.string()
-					.min(2, "Name minimum 2 characters")
-					.required("Name is required"),
-				lastName: Yup.string().required("O sobrenome é obrigatório"),
-				username: Yup.string()
-					.min(2, "Nome de usuário mínimo de 2 caracteres")
-					.max(12, "Nome de usuário máximo de 12 caracteres")
-					.required("O nome de usuário é obrigatório"),
-				gender: Yup.string().required("Selecione o gênero"),
-				birthDate: Yup.string().required("Data de nascimento é obrigatório"),
-				educationLevel: Yup.string().required("Selecione o nível de educação"),
-				email: Yup.string()
-					.email("Enter a valid email")
-					.required("Email is required"),
-				password: Yup.string()
-					.min(8, "Password minimum 8 characters")
-					.required("Password is required"),
-			});
-
 			await schema.validate(data, {
 				abortEarly: false,
 			});
@@ -180,12 +179,12 @@ export const SignUp = () => {
 								</div>
 								<span className="flex text-gray-600 font-bold whitespace-nowrap gap-1 items-center justify-center">
 									Já possui uma conta?
-									<a
+									<Link
 										className="h-12 w-full text-primary font-bold flex items-center justify-center transition ease-in-out hover:underline"
-										href="/login"
+										to="/login"
 									>
 										Faça login
-									</a>
+									</Link>
 								</span>
 							</div>
 						</Form>

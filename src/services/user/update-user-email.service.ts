@@ -2,14 +2,15 @@ import { AxiosError } from 'axios'
 
 import apiClient from '../api-client.service'
 import { UserResponse } from './type/user-response.interface'
+import { UpdateEmailRequest } from '../requests/user/update-user.interface'
 
 interface ErrorResponse {
   message: string
 }
 
-export const updateUserService = async (userId: number, data: Partial<UserResponse>) => {
+export const updateUserEmailService = async (userId: number, data: UpdateEmailRequest) => {
   try {
-    const user = await apiClient.put(`/users/update/${userId}`, data)
+    const user = await apiClient.put<UserResponse>(`/users/update-email/${userId}`, data)
 
     return {
       data: user.data,
