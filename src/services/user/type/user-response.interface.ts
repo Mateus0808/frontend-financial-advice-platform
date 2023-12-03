@@ -8,7 +8,7 @@ export interface UserResponse {
 	email: string;
 	password: string;
 	birthDate: Date;
-	gender: "MALE" | "FEMALE" | "OTHER";
+	gender: "MALE" | "FEMALE" | "OTHER" | "";
 	educationLevel: string;
 	annualIncome: number;
 	roles: ["ROLE_ADMIN" | "ROLE_USER"];

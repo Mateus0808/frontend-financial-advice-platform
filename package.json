@@ -12,6 +12,7 @@
   "dependencies": {
     "@unform/web": "^2.1.6",
     "axios": "^1.5.1",
+    "formik": "^2.4.5",
     "polished": "^4.2.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

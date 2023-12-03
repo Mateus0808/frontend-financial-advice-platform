@@ -1,15 +1,15 @@
 import { Button } from "../components/Button";
 import { Navbar } from "../components/navbar";
 
-import localLibrary from '../assets/local_library.svg'
-import receiptLong from '../assets/receipt_long.svg'
-import tracking from '../assets/tracking.svg'
-import rewardIcon from '../assets/rewards.svg'
+import localLibrary from "../assets/local_library.svg";
+import receiptLong from "../assets/receipt_long.svg";
+import tracking from "../assets/tracking.svg";
+import rewardIcon from "../assets/rewards.svg";
+import { Outlet } from "react-router-dom";
 
 export const Home = () => {
 	return (
 		<>
-			<Navbar />
 			<div className="w-full mt-10">
 				<div className="max-w-[1180px] w-full min-h-[772px] md:items-center m-auto p-8 flex flex-col md:flex-row-reverse gap-12">
 					<div className="border-2 border-green-500 rounded h-96 md:w-1/2">
@@ -34,7 +34,7 @@ export const Home = () => {
 				</div>
 			</div>
 			<div className="relative">
-				<div className="bg-black relative">
+				<div className="relative">
 					<img
 						className="h-[50rem] md:h-[40rem] object-cover w-full"
 						src="/banner_.jpg"
@@ -57,27 +57,35 @@ export const Home = () => {
 							aspectos das finanças pessoais.
 						</p>
 						<p className="text-white text-base max-w-[880px]">
-							Por isso, mais do que tecnologia, o Pafy é uma plataforma
-							completa que busca fomentar e profissionalizar a carreira de
-							planejadores financeiros pessoais independentes de todo o Brasil.
+							Por isso, mais do que tecnologia, o Pafy é uma plataforma completa
+							que busca fomentar e profissionalizar a carreira de planejadores
+							financeiros pessoais independentes de todo o Brasil.
 						</p>
 					</div>
 					<div className="mt-8 grid gap-8 grid-cols-2 md:grid-cols-4">
 						<div className="flex flex-col gap-4 items-center">
 							<img className="h-16" src={localLibrary} alt="" />
-							<span className="font-bold text-center text-white">Aprendizado contínuo</span>
+							<span className="font-bold text-center text-white">
+								Aprendizado contínuo
+							</span>
 						</div>
 						<div className="flex flex-col gap-4 items-center">
 							<img className="h-16" src={receiptLong} alt="" />
-							<span className="font-bold text-center text-white">Gerenciamento de Transações</span>
+							<span className="font-bold text-center text-white">
+								Gerenciamento de Transações
+							</span>
 						</div>
 						<div className="flex flex-col gap-4 items-center">
 							<img className="h-16" src={tracking} alt="" />
-							<span className="font-bold text-center text-white">Metas e Orçamento</span>
+							<span className="font-bold text-center text-white">
+								Metas e Orçamento
+							</span>
 						</div>
 						<div className="flex flex-col gap-4 items-center">
 							<img className="h-16" src={rewardIcon} alt="" />
-							<span className="font-bold text-center text-white">Recompensas</span>
+							<span className="font-bold text-center text-white">
+								Recompensas
+							</span>
 						</div>
 					</div>
 				</div>

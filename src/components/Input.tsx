@@ -1,47 +1,23 @@
-import { InputHTMLAttributes, useEffect, useRef } from "react";
-import { useField } from "@unform/core";
-import InputMask from 'react-input-mask'
+import { InputHTMLAttributes } from "react";
+import { Field } from 'formik'
+
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 	name: string;
-	mask: string
+	touched: boolean | undefined;
+	error: string | undefined
 }
 
-export const Input = ({ mask, name, ...rest }: InputProps) => {
-	const inputRef = useRef(null);
-	const { fieldName, defaultValue, registerField, error, clearError } =
-		useField(name);
-
-	useEffect(() => {
-		registerField({
-			name: fieldName,
-			ref: inputRef,
-			getValue: (ref) => {
-				return ref.current.value;
-			},
-			setValue: (ref, value) => {
-				ref.current.value = value;
-			},
-			clearValue: (ref) => {
-				ref.current.value = "";
-			},
-		});
-	}, [fieldName, registerField]);
+export const Input = ({ touched, error, name, ...rest }: InputProps) => {
 
 	return (
 		<div className="flex flex-col">
-			<InputMask
-				mask={mask}
-				ref={inputRef}
-				defaultValue={defaultValue}
+			<Field
 				id={name}
 				name={name}
-				onChange={() => clearError()}
 				{...rest}
-				className={`w-full bg-gray-300 text-gray-600 p-2 h-12 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-border ${
-					error ? "border-red-400" : ""
-				}`}
+				className={`w-full bg-gray-300 text-gray-600 px-4 h-12 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-border`}
 			/>
-			<span className="text-red-400 text-sm h-2">{error ? error : ""}</span>
+			<span className="text-red-400 text-sm h-2">{ (error && touched) ? error : '' }</span>
 		</div>
 	);
 };

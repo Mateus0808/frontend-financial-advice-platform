@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { NewTransactionModal } from "./NewTransactionModal";
 import { ActionMenu } from "./ActionMenu";
-import { useAuthenticated } from "../../contexts/AuthContext";
 import { useTransactions } from "../../contexts/UseTransaction";
+import { useAuthenticated } from "../../contexts/AuthContext";
 
 export function TransactionsTable() {
 	const { user } = useAuthenticated();

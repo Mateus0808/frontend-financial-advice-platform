@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { Form } from "@unform/web";
-import { Label } from "../../../../components/Label";
+import { Label } from "../../../../../components/Label";
 import { CardContainer } from "../CardContainer";
 import { ModalPassword } from "./ModalPassword";
 import { ModalEmail } from "./ModalEmail";

@@ -1,6 +1,7 @@
-import { Form } from "@unform/web";
 import { useRef } from "react";
 import * as Yup from "yup";
+import { Formik, Form } from "formik";
+import { useNavigate, Link } from "react-router-dom";
 
 import { Label } from "../../components/Label";
 import { Input } from "../../components/Input";
@@ -9,8 +10,6 @@ import { Button } from "../../components/Button";
 import { createUserService } from "../../services/user/create-user.service";
 import { errorNotify, successNotify } from "../../utils/notify";
 import { CreateUserParams } from "../../services/user/type/create-user.interface";
-import { Navbar } from "../../components/navbar";
-import { useNavigate, Link } from "react-router-dom";
 
 const schema = Yup.object({
 	firstName: Yup.string()
@@ -36,11 +35,20 @@ export const SignUp = () => {
 	const formRef = useRef(null);
 	const navigate = useNavigate();
 
-	async function handleSubmit(data: CreateUserParams) {
+	const initialValues: CreateUserParams = {
+		firstName: "",
+		lastName: "",
+		username: "",
+		gender: "",
+		birthDate: "",
+		educationLevel: "",
+		email: "",
+		password: "",
+	};
+
+	const handleSubmit = async (data: CreateUserParams) => {
 		try {
-			await schema.validate(data, {
-				abortEarly: false,
-			});
+			console.log(data)
 			const createdUser = await createUserService(data);
 			if (createdUser.error) {
 				errorNotify("Erro ao criar usuário");
@@ -48,149 +56,166 @@ export const SignUp = () => {
 			}
 			successNotify("Usuário registrado com sucesso");
 			navigate("/login");
-		} catch (err) {
-			if (err instanceof Yup.ValidationError) {
-				console.log(err);
-				const errorMessages = {};
-
-				err.inner.forEach((error) => {
-					errorMessages[error.path] = error.message;
-				});
-
-				formRef.current.setErrors(errorMessages);
-			}
+		} catch (error) {
+			console.log(error);
 		}
-	}
+	};
 
 	return (
-		<>
-			<Navbar />
-			<div className="max-w-[1180px] min-h-[calc(100vh-72px)] p-8 mb-8 m-auto flex items-center justify-center">
-				<div className="min-h-[524px] h-full w-full flex bg-opacity-50">
-					<div className="hidden w-full md:block rounded-lg">
-						<img
-							src="/login.png"
-							alt="Login"
-							className="h-full bg-red-300 object-cover"
-						/>
-					</div>
-					<div className="bg-white w-full rounded p-6 md:p-12 shadow-2xl flex items-center justify-center md:min-w-[648px]">
-						<Form
-							ref={formRef}
-							onSubmit={handleSubmit}
-							className="flex w-full flex-col"
-						>
-							<h1 className="text-2xl text-gray-600 font-semibold mb-6 text-center">
-								REGISTRAR USUÁRIO
-							</h1>
-							<div className="flex flex-col gap-5">
-								<div className="grid w-full gap-5 md:grid-cols-2">
-									<div>
-										<Label label="Nome" htmlFor="name" />
-										<Input
-											type="text"
-											id="firstName"
-											name="firstName"
-											placeholder="Digite seu nome..."
-										/>
+		<div className="max-w-[1180px] min-h-[calc(100vh-72px)] p-8 mb-8 m-auto flex items-center justify-center">
+			<div className="min-h-[524px] h-full w-full flex bg-opacity-50">
+				<div className="hidden w-full md:block rounded-lg">
+					<img
+						src="/login.png"
+						alt="Login"
+						className="h-full bg-red-300 object-cover"
+					/>
+				</div>
+				<div className="bg-white w-full rounded p-6 md:p-12 shadow-2xl flex items-center justify-center md:min-w-[648px]">
+					<Formik
+						initialValues={initialValues}
+						validationSchema={schema}
+						onSubmit={handleSubmit}
+					>
+						{({ errors, touched }) => (
+							<Form className="flex w-full flex-col">
+								<h1 className="text-2xl text-gray-600 font-semibold mb-6 text-center">
+									REGISTRAR USUÁRIO
+								</h1>
+								<div className="flex flex-col gap-5">
+									<div className="grid w-full gap-5 md:grid-cols-2">
+										<div>
+											<Label label="Nome" htmlFor="name" />
+											<Input
+												error={errors.firstName}
+												touched={touched.firstName}
+												type="text"
+												id="firstName"
+												name="firstName"
+												placeholder="Digite seu nome..."
+											/>
+										</div>
+										<div>
+											<Label label="Sobrenome" htmlFor="lastName" />
+											<Input
+												error={errors.lastName}
+												touched={touched.lastName}
+												type="text"
+												id="lastName"
+												name="lastName"
+												placeholder="Sobrenome..."
+											/>
+										</div>
 									</div>
-									<div>
-										<Label label="Sobrenome" htmlFor="surname" />
-										<Input
-											type="text"
-											id="lastName"
-											name="lastName"
-											placeholder="Sobrenome..."
-										/>
+									<div className="grid w-full gap-5 md:grid-cols-2">
+										<div>
+											<Label label="Nome de usuário" htmlFor="username" />
+											<Input
+												error={errors.username}
+												touched={touched.username}
+												type="text"
+												id="username"
+												name="username"
+												placeholder="Digite seu nome de usuário..."
+											/>
+										</div>
+										<div>
+											<Label label="Gênero" htmlFor="gender" />
+											<Select
+												id="gender"
+												name="gender"
+												error={errors.gender}
+												touched={touched.gender}
+											>
+												<option value="">Selecione o gênero...</option>
+												<option value="MALE">Masculino</option>
+												<option value="FEMALE">Feminino</option>
+												<option value="OTHER">Outro</option>
+											</Select>
+										</div>
+									</div>
+									<div className="grid w-full gap-5 md:grid-cols-2">
+										<div>
+											<Label label="Data de nascimento" htmlFor="birthDate" />
+											<Input
+												error={errors.birthDate}
+												touched={touched.birthDate}
+												type="date"
+												id="birthDate"
+												name="birthDate"
+												placeholder="Data de nascimento..."
+											/>
+										</div>
+										<div>
+											<Label
+												label="Nível de educação"
+												htmlFor="educationLevel"
+											/>
+											<Select
+												error={errors.educationLevel}
+												touched={touched.educationLevel}
+												id="educationLevel"
+												name="educationLevel"
+											>
+												<option value="">Nível de educação...</option>
+												<option value="ELEMENTARY_SCHOOL">Ensino Fundamental</option>
+												<option value="HIGH_SCHOOL">Ensino Médio</option>
+												<option value="GRADUATION">Graduação</option>
+												<option value="SPECIALIZATION">Especialização</option>
+												<option value="MASTER">Mestrado</option>
+												<option value="DOCTORAGE">Doutorado</option>
+											</Select>
+										</div>
+									</div>
+									<div className="grid w-full gap-5 md:grid-cols-2">
+										<div>
+											<Label label="E-mail" htmlFor="email" />
+											<Input
+												error={errors.email}
+												touched={touched.email}
+												type="email"
+												id="email"
+												name="email"
+												placeholder="Digite seu e-mail..."
+											/>
+										</div>
+										<div>
+											<Label label="Senha" htmlFor="password" />
+											<Input
+												error={errors.password}
+												touched={touched.password}
+												type="password"
+												id="password"
+												name="password"
+												placeholder="Senha..."
+											/>
+										</div>
 									</div>
 								</div>
-								<div className="grid w-full gap-5 md:grid-cols-2">
-									<div>
-										<Label label="Nome de usuário" htmlFor="username" />
-										<Input
-											type="text"
-											id="username"
-											name="username"
-											placeholder="Digite seu nome de usuário..."
-										/>
+								<div className="mt-5 gap-4 flex flex-col items-center justify-between">
+									<div className="h-12 w-full">
+										<Button title="CADASTRAR" type="submit" />
 									</div>
-									<div>
-										<Label label="Gênero" htmlFor="gender" />
-										<Select id="gender" name="gender">
-											<option value="">Selecione o gênero...</option>
-											<option value="MALE">Masculino</option>
-											<option value="FEMALE">Feminino</option>
-											<option value="OTHER">Outro</option>
-										</Select>
+									<div className="flex justify-center items-center w-full relative">
+										<span className="dashed-line-left"></span>
+										<span className="text-sm font-bold text-[#4b5563]">OU</span>
+										<span className="dashed-line-right"></span>
 									</div>
+									<span className="flex text-gray-600 font-bold whitespace-nowrap gap-1 items-center justify-center">
+										Já possui uma conta?
+										<Link
+											className="h-12 w-full text-primary font-bold flex items-center justify-center transition ease-in-out hover:underline"
+											to="/login"
+										>
+											Faça login
+										</Link>
+									</span>
 								</div>
-								<div className="grid w-full gap-5 md:grid-cols-2">
-									<div>
-										<Label label="Data de nascimento" htmlFor="birthDate" />
-										<Input
-											type="date"
-											id="birthDate"
-											name="birthDate"
-											placeholder="Data de nascimento..."
-										/>
-									</div>
-									<div>
-										<Label label="Nível de educação" htmlFor="educationLevel" />
-										<Select id="educationLevel" name="educationLevel">
-											<option value="">Nível de educação...</option>
-											<option value="MALE">Ensino Fundamental</option>
-											<option value="FEMALE">Ensino Médio</option>
-											<option value="OTHER">Graduação</option>
-											<option value="OTHER">Especialização</option>
-											<option value="OTHER">Mestrado</option>
-											<option value="OTHER">Doutorado</option>
-										</Select>
-									</div>
-								</div>
-								<div className="grid w-full gap-5 md:grid-cols-2">
-									<div>
-										<Label label="E-mail" htmlFor="login" />
-										<Input
-											type="email"
-											id="email"
-											name="email"
-											placeholder="Digite seu e-mail..."
-										/>
-									</div>
-									<div>
-										<Label label="Senha" htmlFor="password" />
-										<Input
-											type="password"
-											id="password"
-											name="password"
-											placeholder="Senha..."
-										/>
-									</div>
-								</div>
-							</div>
-							<div className="mt-5 gap-4 flex flex-col items-center justify-between">
-								<div className="h-12 w-full">
-									<Button title="CADASTRAR" type="submit" />
-								</div>
-								<div className="flex justify-center items-center w-full relative">
-									<span className="dashed-line-left"></span>
-									<span className="text-sm font-bold text-[#4b5563]">OU</span>
-									<span className="dashed-line-right"></span>
-								</div>
-								<span className="flex text-gray-600 font-bold whitespace-nowrap gap-1 items-center justify-center">
-									Já possui uma conta?
-									<Link
-										className="h-12 w-full text-primary font-bold flex items-center justify-center transition ease-in-out hover:underline"
-										to="/login"
-									>
-										Faça login
-									</Link>
-								</span>
-							</div>
-						</Form>
-					</div>
+							</Form>
+						)}
+					</Formik>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 };

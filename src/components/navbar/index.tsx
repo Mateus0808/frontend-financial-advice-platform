@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { IconContext } from "react-icons";
 import { HiMenuAlt2 } from "react-icons/hi";
 import { useMediaQuery } from "react-responsive";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, Outlet } from "react-router-dom";
 import { Item } from "./Item";
 
 export const Navbar = () => {
@@ -17,7 +17,7 @@ export const Navbar = () => {
 	const handleMenu = () => {
 		setMenuIsActivated(!menuIsActivated);
 	};
-	
+
 	return (
 		<header className="sticky z-50 bg-white w-full top-0">
 			<div className="md:max-w-[1440px] m-auto flex justify-between items-center h-[72px] p-8">
@@ -44,7 +44,11 @@ export const Navbar = () => {
 					<ul className="ease-out duration-300 flex flex-col w-full h-full p-8 gap-2 md:gap-0 md:flex-row md:p-0 md:items-center md:justify-center">
 						<Item name="Home" link="/" pathname={location.pathname} />
 						<Item name="Sobre" link="/about" pathname={location.pathname} />
-						<Item name="Contatos" link="/contate-nos" pathname={location.pathname} />
+						<Item
+							name="Contatos"
+							link="/contate-nos"
+							pathname={location.pathname}
+						/>
 					</ul>
 				</nav>
 
@@ -56,13 +60,15 @@ export const Navbar = () => {
 						LOGIN
 					</Link>
 					<Link
-						to="/signup"
+						to="/register"
 						className="flex h-10 whitespace-nowrap text-sm transition ease-in-out font-bold items-center rounded px-4 border border-primary hover:text-white hover:bg-primary-hover"
 					>
 						CRIAR CONTA
 					</Link>
 				</div>
 			</div>
+
+			<Outlet />
 		</header>
 	);
 };

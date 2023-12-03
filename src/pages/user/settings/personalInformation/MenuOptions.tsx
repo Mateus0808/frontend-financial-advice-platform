@@ -1,7 +1,7 @@
 
 export const MenuOptions = () => {
 	return (
-		<div className="sticky bg-white shadow-2xl shadow-gray-500 hidden w-[325px] top-14 mr-16 rounded py-2 xl:block">
+		<div className="sticky bg-white shadow-2xl shadow-gray-500 hidden w-[325px] top-[5.7rem] mr-16 rounded py-2 xl:block">
 			<a
 				href=""
 				className="text-gray-600 w-full px-8 rounded py-4 border-solid block cursor-pointer hover:bg-gray-100"
