@@ -24,15 +24,17 @@ export type ModalEmailProps = {
 };
 
 export const ModalEmail = ({ setShowModal }: ModalEmailProps) => {
-	const { user, updateUserEmail } = useAuthenticated()
+	const { user, updateUserEmail } = useAuthenticated();
+
 	const initialValues: UpdateEmailRequest = {
 		currentEmail: "",
 		newEmail: "",
 	};
 
 	const handleSubmit = async (data: UpdateEmailRequest) => {
-		if(user) {
-			await updateUserEmail(user?.id, data);
+		if (user) {
+			const success = await updateUserEmail(user?.id, data);
+			if (success) setShowModal({ open: false, type: "" });
 		}
 	};
 

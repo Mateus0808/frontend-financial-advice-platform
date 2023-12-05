@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import { useNavigate, Link } from "react-router-dom";
@@ -13,8 +12,8 @@ import { CreateUserParams } from "../../services/user/type/create-user.interface
 
 const schema = Yup.object({
 	firstName: Yup.string()
-		.min(2, "Name minimum 2 characters")
-		.required("Name is required"),
+		.min(2, "Nome, mínimo de 2 caracteres")
+		.required("Nome é obrigatório"),
 	lastName: Yup.string().required("O sobrenome é obrigatório"),
 	username: Yup.string()
 		.min(2, "Nome de usuário mínimo de 2 caracteres")
@@ -24,15 +23,14 @@ const schema = Yup.object({
 	birthDate: Yup.string().required("Data de nascimento é obrigatório"),
 	educationLevel: Yup.string().required("Selecione o nível de educação"),
 	email: Yup.string()
-		.email("Enter a valid email")
-		.required("Email is required"),
+		.email("Insira um email válido")
+		.required("Email é obrigatório"),
 	password: Yup.string()
-		.min(8, "Password minimum 8 characters")
-		.required("Password is required"),
+		.min(8, "Senha, mínimo de 8 caracteres")
+		.required("Senha é obrigatório"),
 });
 
 export const SignUp = () => {
-	const formRef = useRef(null);
 	const navigate = useNavigate();
 
 	const initialValues: CreateUserParams = {
@@ -47,18 +45,13 @@ export const SignUp = () => {
 	};
 
 	const handleSubmit = async (data: CreateUserParams) => {
-		try {
-			console.log(data)
-			const createdUser = await createUserService(data);
-			if (createdUser.error) {
-				errorNotify("Erro ao criar usuário");
-				return;
-			}
-			successNotify("Usuário registrado com sucesso");
-			navigate("/login");
-		} catch (error) {
-			console.log(error);
+		const createdUser = await createUserService(data);
+		if (createdUser.error) {
+			errorNotify(createdUser.data);
+			return;
 		}
+		successNotify("Usuário registrado com sucesso");
+		navigate("/login");
 	};
 
 	return (
@@ -158,7 +151,9 @@ export const SignUp = () => {
 												name="educationLevel"
 											>
 												<option value="">Nível de educação...</option>
-												<option value="ELEMENTARY_SCHOOL">Ensino Fundamental</option>
+												<option value="ELEMENTARY_SCHOOL">
+													Ensino Fundamental
+												</option>
 												<option value="HIGH_SCHOOL">Ensino Médio</option>
 												<option value="GRADUATION">Graduação</option>
 												<option value="SPECIALIZATION">Especialização</option>

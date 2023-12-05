@@ -1,14 +1,14 @@
 import { PersonalInfo } from "./PersonalInfo";
 import { Address } from "./Address";
-import { MenuOptions } from "./MenuOptions";
+// import { MenuOptions } from "./MenuOptions";
 import { MyAccess } from "./myAccess";
 import { DefaultContainer } from "../../DefaultContainer";
 
 export const UserInfo = () => {
-
+	
 	return (
-		<div className="max-w-[1180px] relative px-12 p-5 flex w-full items-start justify-between">
-			<MenuOptions />
+		<div className="max-w-[1180px] relative flex w-full items-start justify-between">
+			{/* <MenuOptions /> */}
 			<DefaultContainer>
 				<PersonalInfo />
 				<MyAccess />

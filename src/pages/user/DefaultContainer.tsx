@@ -5,5 +5,7 @@ type DefaultContainerProps = {
 };
 
 export const DefaultContainer = ({ children }: DefaultContainerProps) => (
-	<div className="w-full flex flex-col p-8 gap-4">{children}</div>
+	<div className="max-w-[1180px] w-full flex flex-col m-auto gap-12">
+		{children}
+	</div>
 );

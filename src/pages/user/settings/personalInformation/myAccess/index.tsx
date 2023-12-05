@@ -6,15 +6,15 @@ import { ModalPassword } from "./ModalPassword";
 import { ModalEmail } from "./ModalEmail";
 import { ModalCPF } from "./ModalCPF";
 import { MyAccessButton } from "./MyAccessButton";
+import { useAuthenticated } from "../../../../../contexts/AuthContext";
 
 export type ModalMyAccessProps = {
 	open: boolean;
 	type: "PASSWORD" | "EMAIL" | "CPF" | "";
 };
 
-export type MyAccessProps = {};
-
 export const MyAccess = () => {
+	const { user } = useAuthenticated()
 	const [isOpenModal, setIsOpenModal] = useState<ModalMyAccessProps>({
 		open: false,
 		type: "",
@@ -49,7 +49,7 @@ export const MyAccess = () => {
 						<Label label="E-mail de cadastro" />
 						<MyAccessButton
 							type="EMAIL"
-							value="loiolamateus7@gmail.com"
+							value={user?.email}
 							handleModal={handleModal}
 						/>
 					</div>

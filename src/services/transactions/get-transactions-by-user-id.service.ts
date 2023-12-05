@@ -1,10 +1,8 @@
 import apiClient from "../api-client.service";
 
-export const getTransactionsByUserId = async (userId: number) => {
+export const getTransactionsByUserId = async (userId: string) => {
 	try {
-		const transactions = await apiClient.get(
-			`/transactions/user/transactions/${userId}`
-		);
+		const transactions = await apiClient.get(`/transactions/user/${userId}`);
 
 		return {
 			data: transactions.data,

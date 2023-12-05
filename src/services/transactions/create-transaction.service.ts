@@ -6,7 +6,7 @@ interface ErrorResponse {
 	message: string;
 }
 
-export const createTransactionService = async (data: any) => {
+export const createTransactionService = async (userId: string, data: any) => {
 	try {
 		const transaction = await apiClient.post(
 			`/transactions/create-transaction/mateus@gmail.com`,

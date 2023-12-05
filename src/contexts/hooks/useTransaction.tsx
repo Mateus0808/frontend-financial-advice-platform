@@ -8,10 +8,12 @@ import { TransactionResponse } from "../../services/transactions/type/response/t
 type TransactionRequest = Omit<TransactionResponse, "id" | "createdAt">;
 
 export function useTransaction() {
-	const [transactions, setTransactions] = useState<TransactionResponse[] | any>([]);
-	const { signOut } = useAuthenticated();
+	const [transactions, setTransactions] = useState<TransactionResponse[] | any>(
+		[]
+	);
+	const { signOut, user } = useAuthenticated();
 
-	async function fetchUserTransactions(userId: number) {
+	async function fetchUserTransactions(userId: string) {
 		const response = await getTransactionsByUserId(userId);
 		if (response.statusCode === 200) {
 			setTransactions(response.data);
@@ -27,7 +29,7 @@ export function useTransaction() {
 
 	async function createTransaction(transactionRequest: TransactionRequest) {
 		const response = await apiClient.post(
-			"/transactions/create-transaction/mateus@gmail.com",
+			`/transactions/create-transaction/${user?.email}`,
 			{
 				...transactionRequest,
 				createdAt: new Date(),

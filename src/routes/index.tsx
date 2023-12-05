@@ -1,10 +1,8 @@
 import {
 	Route,
-	Routes,
 	createBrowserRouter,
 	Outlet,
 	createRoutesFromElements,
-	useLocation,
 } from "react-router-dom";
 import { Home } from "../pages/Home";
 import { About } from "../pages/about";
@@ -19,15 +17,19 @@ import { Sidebar } from "../components/sidebar";
 import { UserInfo } from "../pages/user/settings/personalInformation";
 import { Navbar } from "../components/navbar";
 import { AuthProvider } from "../contexts/AuthContext";
-
-
+import { TransactionsProvider } from "../contexts/UseTransaction";
 
 const AuthLayout = () => (
-  <AuthProvider>
-    <Outlet />
-  </AuthProvider>
+	<AuthProvider>
+		<Outlet />
+	</AuthProvider>
 );
 
+const TransactionLayout = () => (
+	<TransactionsProvider>
+		<Outlet />
+	</TransactionsProvider>
+);
 
 export const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -38,15 +40,20 @@ export const router = createBrowserRouter(
 				<Route path="/login" element={<Login />} />
 				<Route path="/register" element={<SignUp />} />
 			</Route>
-      <Route path="/home" element={<Sidebar />}>
-        <Route index element={<UserHome />} />
-        <Route path="configuracoes" element={<UserSettings />} />
-				<Route path="configuracoes/perfil" element={<UserInfo />} />
-				<Route path="transacoes" element={<Transaction />} />
-				<Route path="educacao-financeira" element={<FinancialEducation />} />
-				<Route path="educacao-financeira/despesas" element={<FinancialModulo />} />
-      </Route>
-    </Route>
+
+			<Route element={<TransactionLayout />}>
+				<Route path="/home" element={<Sidebar />}>
+					<Route index element={<UserHome />} />
+					<Route path="configuracoes" element={<UserSettings />} />
+					<Route path="configuracoes/perfil" element={<UserInfo />} />
+					<Route path="transacoes" element={<Transaction />} />
+					<Route path="educacao-financeira" element={<FinancialEducation />} />
+					<Route
+						path="educacao-financeira/despesas"
+						element={<FinancialModulo />}
+					/>
+				</Route>
+			</Route>
+		</Route>
 	)
 );
-

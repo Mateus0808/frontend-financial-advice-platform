@@ -1,7 +1,7 @@
 import { ModalMyAccessProps } from ".";
 
 type MyAccessButtonProps = {
-	value: string;
+	value: string | undefined;
 	type: "PASSWORD" | "EMAIL" | "CPF" | "";
 	handleModal: (props: ModalMyAccessProps) => void;
 }

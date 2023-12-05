@@ -1,7 +1,7 @@
 import { TransactionResponse } from "../../transactions/type/response/transaction-response.interface";
 
 export interface UserResponse {
-	id: number;
+	id: string;
 	username: string;
 	firstName: string;
 	lastName: string;

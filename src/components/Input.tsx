@@ -15,7 +15,7 @@ export const Input = ({ touched, error, name, ...rest }: InputProps) => {
 				id={name}
 				name={name}
 				{...rest}
-				className={`w-full bg-gray-300 text-gray-600 px-4 h-12 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-border`}
+				className={`w-full bg-gray-200 text-gray-600 px-4 h-12 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-border`}
 			/>
 			<span className="text-red-400 text-sm h-2">{ (error && touched) ? error : '' }</span>
 		</div>

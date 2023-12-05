@@ -10,6 +10,7 @@ import { ModalMyAccessProps } from ".";
 import { UpdateUserPasswordRequest } from "../../../../../services/requests/user/update-user.interface";
 import { useAuthenticated } from "../../../../../contexts/AuthContext";
 import { updateUserPasswordService } from "../../../../../services/user/update-user-password.service";
+import { errorNotify, successNotify } from "../../../../../utils/notify";
 
 const schema = Yup.object({
 	currentPassword: Yup.string()
@@ -29,6 +30,7 @@ export type ModalPasswordProps = {
 
 export const ModalPassword = ({ setShowModal }: ModalPasswordProps) => {
 	const { user } = useAuthenticated();
+
 	const initialValues: UpdateUserPasswordRequest = {
 		currentPassword: "",
 		newPassword: "",
@@ -36,10 +38,15 @@ export const ModalPassword = ({ setShowModal }: ModalPasswordProps) => {
 	};
 
 	const handleSubmit = async (data: UpdateUserPasswordRequest) => {
-		try {
-			if (user) await updateUserPasswordService(user?.id, data);
-		} catch (err: any) {
-			throw new Error(err);
+		if (user) {
+			const response = await updateUserPasswordService(user?.id, data);
+			if (response.error) {
+				errorNotify(response.data);
+				return;
+			}
+			console.log("response.data: " + response.data);
+			successNotify(response.data);
+			setShowModal({ open: false, type: "" });
 		}
 	};
 

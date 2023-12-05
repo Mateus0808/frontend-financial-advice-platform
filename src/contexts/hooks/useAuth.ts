@@ -21,7 +21,6 @@ export function useAuth() {
 	const isAuthenticated = !!user;
 
 	useEffect(() => {
-		setLoading(true);
 		(async function fetchData() {
 			const token = localStorage.getItem("pafy_access_token");
 			const userId = localStorage.getItem("pafy_userId");
@@ -34,8 +33,7 @@ export function useAuth() {
 			}
 			navigate("/login");
 		})();
-		setLoading(false);
-	}, []);
+	}, [navigate]);
 
 	async function isLoggedIn() {
 		setLoading(true);
@@ -46,9 +44,8 @@ export function useAuth() {
 		setLoading(false);
 	}
 
-	async function getUserById() {
+	async function getUserById(userId: string) {
 		try {
-			const userId = localStorage.getItem("pafy_userId");
 			if (userId) {
 				const response = await getUserByIdService(userId);
 				setUser(response.data);
@@ -58,32 +55,37 @@ export function useAuth() {
 		}
 	}
 
-	async function updateUser(userId: number, data: Partial<UserResponse>) {
+	async function updateUser(userId: string, data: Partial<UserResponse>) {
 		try {
 			const response = await updateUserService(userId, data);
 			if (response.error) {
 				errorNotify("Erro ao atualizar usuário");
 				return;
 			}
-			setUser(response.data)
-			successNotify("Usuário atualizado com sucesso")
-		} catch(error: any) {
+			setUser(response.data);
+			successNotify("Usuário atualizado com sucesso");
+		} catch (error: any) {
 			errorNotify(error);
 		}
 	}
 
-	async function updateUserEmail(userId: number, data: UpdateEmailRequest) {
-		try {
-			const response = await updateUserEmailService(userId, data);
-			if (response.error) {
-				errorNotify("Erro ao atualizar usuário");
-				return;
-			}
-			setUser(response.data)
-			successNotify("Usuário atualizado com sucesso")
-		} catch(error: any) {
-			errorNotify(error);
+	async function updateUserEmail(
+		userId: string,
+		data: UpdateEmailRequest
+	): Promise<boolean> {
+		const response = await updateUserEmailService(userId, data);
+
+		if (response.error && response.data === "Usuário não encontrado") {
+			errorNotify(response.data);
+			return false;
+		} else if (response.error) {
+			errorNotify("Erro ao atualizar e-mail");
+			return false;
 		}
+
+		setUser(response.data);
+		successNotify("Email atualizado com sucesso");
+		return true;
 	}
 
 	async function signIn({ email, password }: SignInData) {
@@ -91,18 +93,17 @@ export function useAuth() {
 		try {
 			const response = await userLoginService({ email, password });
 			if (response.error) {
-				errorNotify("Erro ao fazer login");
+				errorNotify(response.data);
 				return;
 			}
-			const { token, ...rest } = response.data;
-			setUser(rest);
+			const { token, user } = response.data;
+			setUser(user);
 
 			localStorage.setItem("pafy_access_token", token);
-			localStorage.setItem("pafy_userId", rest.id);
+			localStorage.setItem("pafy_userId", user.id);
 
 			apiSetup.defaults.headers.common.authorization = `Bearer ${token}`;
-			successNotify("Usuário logado com sucesso");
-			navigate("/dashboard");
+			navigate("/home");
 		} catch (error) {
 			console.log("error", error);
 		} finally {

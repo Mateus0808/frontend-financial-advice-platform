@@ -6,7 +6,7 @@ import { useAuthenticated } from "../../contexts/AuthContext";
 
 import { IconsTracking } from "../icons/Tracking";
 import { IconReward } from "../icons/Rewards";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { LinkOption } from "./LinkOption";
 
 export const Sidebar = () => {
@@ -17,7 +17,9 @@ export const Sidebar = () => {
 			<div className="max-w-sm min-h-screen sticky top-0 left-0 bg-[#202024] flex flex-col md:flex">
 				<div className="flex flex-col">
 					<div className="w-full min-h-[6rem] p-4 flex justify-center items-center">
-						<img className="w-16 md:w-24" src="/logo.png" alt="" />
+						<Link to="/home">
+							<img className="w-16 md:w-24" src="/logo.png" alt="" />
+						</Link>
 					</div>
 
 					<div className="border-b-[1px] border-solid w-full border-gray-200" />

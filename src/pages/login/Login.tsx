@@ -11,7 +11,7 @@ const schema = Yup.object({
 		.email("Enter a valid email")
 		.required("Email is required"),
 	password: Yup.string()
-		.min(6, "Password minimum 8 characters")
+		.min(8, "Password minimum 8 characters")
 		.required("Password is required"),
 });
 
@@ -26,7 +26,7 @@ export const Login = () => {
 	const initialValues: LoginProps = { email: "", password: "" };
 
 	const handleSubmit = async (data: LoginProps) => {
-		await signIn(data)
+		await signIn(data);
 	};
 
 	return (

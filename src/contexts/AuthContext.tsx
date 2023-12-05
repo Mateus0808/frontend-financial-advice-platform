@@ -9,9 +9,15 @@ type AuthContextType = {
 	signIn: (data: SignInData) => Promise<void>;
 	signOut: () => Promise<void>;
 	isLoggedIn: () => Promise<void>;
-	getUserById: () => Promise<void>;
-	updateUser: (userId: number, data: Partial<UserResponse>) => Promise<UserResponse | any>;
-	updateUserEmail: (userId: number, email: UpdateEmailRequest) => Promise<UserResponse | any>;
+	getUserById: (id: string) => Promise<void>;
+	updateUser: (
+		userId: string,
+		data: Partial<UserResponse>
+	) => Promise<UserResponse | any>;
+	updateUserEmail: (
+		userId: string,
+		email: UpdateEmailRequest
+	) => Promise<UserResponse | any>;
 	loading: boolean;
 	setUser: React.Dispatch<React.SetStateAction<UserResponse | undefined>>;
 };

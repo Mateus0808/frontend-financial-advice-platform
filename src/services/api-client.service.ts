@@ -9,6 +9,7 @@ const apiClient = () => {
 	}
 
 	api.interceptors.request.use((config) => {
+		console.log("config: " + JSON.stringify(config));
 		return config;
 	});
 
