@@ -33,12 +33,6 @@ export const FinancialModulo = () => {
 						de renda e demais tributos pessoais
 					</p>
 				</div>
-				<div>
-					<h3 className="font-bold text-xl text-gray-500">
-						Renda Pessoal Disponível
-					</h3>
-					<p></p>
-				</div>
 			</div>
 		</div>
 	);

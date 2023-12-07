@@ -76,7 +76,7 @@ export const FinancialEducation = () => {
 									<ul className="flex flex-col w-full pl-[3rem] ">
 										<li className="h-12 w-full flex flex-col justify-center items-center">
 											<a
-												href="/home/educacao-financeira/despesas"
+												href="/home/educacao-financeira/renda"
 												className="w-full whitespace-nowrap h-full px-4 flex rounded gap-2 items-center hover:bg-white hover:bg-opacity-5"
 											>
 												Renda
@@ -84,7 +84,7 @@ export const FinancialEducation = () => {
 										</li>
 										<li className="h-12 w-full flex flex-col justify-center items-center">
 											<a
-												href="#"
+												href="/home/educacao-financeira/despesas"
 												className="w-full whitespace-nowrap h-full px-4 flex rounded gap-2 items-center hover:bg-white hover:bg-opacity-5"
 											>
 												Despesas

@@ -20,24 +20,17 @@ export function useAuth() {
 	const [loading, setLoading] = useState(true);
 	const isAuthenticated = !!user;
 
-	useEffect(() => {
-		(async function fetchData() {
-			const token = localStorage.getItem("pafy_access_token");
-			const userId = localStorage.getItem("pafy_userId");
-
-			if (token && userId) {
-				const response = await getUserByIdService(userId);
-				setUser(response.data);
-
-				return;
-			}
-			navigate("/login");
-		})();
-	}, [navigate]);
-
 	async function isLoggedIn() {
 		setLoading(true);
 		const token = localStorage.getItem("pafy_access_token");
+		const userId = localStorage.getItem("pafy_userId");
+
+		if (token && userId) {
+			const response = await getUserByIdService(userId);
+			setUser(response.data);
+
+			return;
+		}
 
 		if (token) return;
 		navigate("/login");

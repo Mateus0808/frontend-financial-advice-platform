@@ -18,6 +18,7 @@ import { UserInfo } from "../pages/user/settings/personalInformation";
 import { Navbar } from "../components/navbar";
 import { AuthProvider } from "../contexts/AuthContext";
 import { TransactionsProvider } from "../contexts/UseTransaction";
+import { ExpenseModule } from "../pages/user/financial_education/Expense";
 
 const AuthLayout = () => (
 	<AuthProvider>
@@ -49,8 +50,12 @@ export const router = createBrowserRouter(
 					<Route path="transacoes" element={<Transaction />} />
 					<Route path="educacao-financeira" element={<FinancialEducation />} />
 					<Route
-						path="educacao-financeira/despesas"
+						path="educacao-financeira/renda"
 						element={<FinancialModulo />}
+					/>
+					<Route
+						path="educacao-financeira/despesas"
+						element={<ExpenseModule />}
 					/>
 				</Route>
 			</Route>
